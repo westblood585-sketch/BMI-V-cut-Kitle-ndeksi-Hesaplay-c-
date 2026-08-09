@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitals Studio — BMI Hesaplayıcı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true">
+  <span class="aurora__blob aurora__blob--1"></span>
+  <span class="aurora__blob aurora__blob--2"></span>
+  <span class="aurora__blob aurora__blob--3"></span>
+</div>
+
+<div class="app">
+
+  <header class="hero">
+    <span class="hero__eyebrow">VITALS STUDIO</span>
+    <h1 class="hero__title">Vücut kitle indeksini<br>bir bakışta gör</h1>
+    <p class="hero__subtitle">Boyunu ve kilonu gir, canlı gösterge sana kategorini ve ideal kilo aralığını hemen göstersin.</p>
+  </header>
+
+  <main class="grid">
+
+    <!-- ============ SOL: GİRİŞ PANELİ ============ -->
+    <section class="panel panel--inputs">
+
+      <div class="avatar-row">
+        <div class="avatar" id="avatarWrap">
+          <svg id="avatarIcon" viewBox="0 0 60 100" class="avatar__svg">
+            <circle cx="30" cy="16" r="13" class="avatar__head"/>
+            <path d="M12 96 Q10 55 18 48 Q24 42 30 42 Q36 42 42 48 Q50 55 48 96 Q40 88 30 88 Q20 88 12 96 Z"
+                  id="avatarBodyFemale" class="avatar__body avatar__body--female"/>
+            <path d="M14 96 L14 58 Q14 44 30 44 Q46 44 46 58 L46 96 Z"
+                  id="avatarBodyMale" class="avatar__body avatar__body--male is-hidden"/>
+          </svg>
+        </div>
+        <div class="segmented" role="group" aria-label="Görsel için cinsiyet seçimi">
+          <button type="button" class="segmented__btn is-active" id="genderFemale" aria-pressed="true">Kadın</button>
+          <button type="button" class="segmented__btn" id="genderMale" aria-pressed="false">Erkek</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <label for="heightRange">Boy</label>
+          <div class="unit-toggle">
+            <span class="field__value"><span id="heightValue">170</span><span id="heightUnitLabel"> cm</span></span>
+            <button type="button" class="unit-toggle__btn" id="heightUnitToggle">cm / inç</button>
+          </div>
+        </div>
+        <input type="range" id="heightRange" min="100" max="220" value="170" step="1" class="ruler">
+        <div class="ruler__ticks" aria-hidden="true">
+          <span>100</span><span>130</span><span>160</span><span>190</span><span>220</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <label for="weightInput">Kilo</label>
+          <div class="unit-toggle">
+            <span class="field__value" id="weightUnitLabel">kg</span>
+            <button type="button" class="unit-toggle__btn" id="weightUnitToggle">kg / lb</button>
+          </div>
+        </div>
+        <div class="stepper">
+          <button type="button" class="stepper__btn" id="weightMinus" aria-label="Kiloyu azalt">−</button>
+          <input type="number" id="weightInput" class="stepper__input" value="68" min="1" max="600" step="1">
+          <button type="button" class="stepper__btn" id="weightPlus" aria-label="Kiloyu artır">+</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field__row">
+          <label for="ageInput">Yaş</label>
+          <span class="field__value">yıl</span>
+        </div>
+        <div class="stepper">
+          <button type="button" class="stepper__btn" id="ageMinus" aria-label="Yaşı azalt">−</button>
+          <input type="number" id="ageInput" class="stepper__input" value="28" min="10" max="100" step="1">
+          <button type="button" class="stepper__btn" id="agePlus" aria-label="Yaşı artır">+</button>
+        </div>
+      </div>
+
+      <p class="error-text is-hidden" id="inputError">Lütfen geçerli bir boy ve kilo değeri gir.</p>
+
+      <div class="action-row">
+        <button type="button" class="btn btn--ghost" id="resetBtn">Sıfırla</button>
+        <button type="button" class="btn btn--primary" id="calculateBtn">
+          <span>Hesapla</span>
+        </button>
+      </div>
+
+      <p class="ideal-weight" id="idealWeight">İdeal kilo aralığın: <strong>—</strong></p>
+
+    </section>
+
+    <!-- ============ SAĞ: GAUGE PANELİ ============ -->
+    <section class="panel panel--gauge">
+
+      <div class="gauge">
+        <svg viewBox="0 0 240 150" class="gauge__svg">
+          <defs>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path id="zoneUnder" class="gauge__zone" fill="none" stroke-linecap="round"></path>
+          <path id="zoneNormal" class="gauge__zone" fill="none" stroke-linecap="round"></path>
+          <path id="zoneOver" class="gauge__zone" fill="none" stroke-linecap="round"></path>
+          <path id="zoneObese" class="gauge__zone" fill="none" stroke-linecap="round"></path>
+          <line id="needle" x1="120" y1="120" x2="120" y2="45" class="gauge__needle" filter="url(#glow)"></line>
+          <circle cx="120" cy="120" r="7" class="gauge__pivot"></circle>
+        </svg>
+        <div class="gauge__readout">
+          <span class="gauge__bmi" id="bmiValue">0.0</span>
+          <span class="gauge__category" id="bmiCategory">Değerlerini gir</span>
+        </div>
+      </div>
+
+      <ul class="legend">
+        <li><span class="legend__dot" data-zone="under"></span>Zayıf</li>
+        <li><span class="legend__dot" data-zone="normal"></span>Normal</li>
+        <li><span class="legend__dot" data-zone="over"></span>Fazla Kilolu</li>
+        <li><span class="legend__dot" data-zone="obese"></span>Obez</li>
+      </ul>
+
+      <p class="gauge__note">BMI, WHO standardına göre cinsiyetten bağımsız hesaplanır — bu yüzden değişmez. Cinsiyete duyarlı farkı aşağıdaki "Vücut Yağ Oranı" kartında gör ↓</p>
+
+    </section>
+
+  </main>
+
+  <!-- ============ TAM GENİŞLİK SKALA ============ -->
+  <section class="scale-section">
+    <div class="scale-section__header">
+      <h2>BMI Skalası Üzerindeki Konumun</h2>
+      <span class="scale-section__value" id="scaleValueLabel">BMI —</span>
+    </div>
+    <div class="scale-track" id="scaleTrack">
+      <div class="scale-track__zones">
+        <span class="scale-track__zone" data-zone="under"></span>
+        <span class="scale-track__zone" data-zone="normal"></span>
+        <span class="scale-track__zone" data-zone="over"></span>
+        <span class="scale-track__zone" data-zone="obese"></span>
+      </div>
+      <div class="scale-track__marker" id="scaleMarker">
+        <span class="scale-track__marker-value" id="scaleMarkerValue">—</span>
+      </div>
+    </div>
+    <div class="scale-track__labels">
+      <span>15</span><span>18.5</span><span>25</span><span>30</span><span>40</span>
+    </div>
+  </section>
+
+  <!-- ============ VÜCUT YAĞ ORANI (cinsiyete duyarlı) ============ -->
+  <section class="bodyfat-section">
+    <div class="bodyfat-section__header">
+      <h2>Tahmini Vücut Yağ Oranı</h2>
+      <span class="bodyfat-section__value" id="bodyFatValue">—%</span>
+    </div>
+    <div class="bodyfat-bar">
+      <div class="bodyfat-bar__fill" id="bodyFatFill"></div>
+    </div>
+    <p class="bodyfat-section__note">
+      <span id="bodyFatCategory">—</span> · Deurenberg formülüyle BMI, yaş ve cinsiyetten tahmin edilir (±3-4% sapma payı olabilir). Tanı amaçlı değildir.
+    </p>
+  </section>
+
+  <!-- ============ İPUÇLARI ============ -->
+  <section class="tips">
+    <h2 class="tips__heading">Kategorine Göre Öneriler</h2>
+    <div class="tips__grid" id="tipsGrid">
+
+      <article class="tip-card" data-zone="under">
+        <span class="tip-card__icon">🍽️</span>
+        <h3>Zayıf</h3>
+        <p>Kilo almak için besleyici, kalori yoğun gıdalar ve düzenli güç antrenmanı işine yarayabilir.</p>
+      </article>
+
+      <article class="tip-card" data-zone="normal">
+        <span class="tip-card__icon">✅</span>
+        <h3>Normal</h3>
+        <p>Harika durumdasın! Dengeli beslenme ve düzenli hareketle bu aralıkta kalmaya devam et.</p>
+      </article>
+
+      <article class="tip-card" data-zone="over">
+        <span class="tip-card__icon">🚶</span>
+        <h3>Fazla Kilolu</h3>
+        <p>Küçük porsiyon ayarlamaları ve haftalık aktiviteni artırmak fark yaratabilir.</p>
+      </article>
+
+      <article class="tip-card" data-zone="obese">
+        <span class="tip-card__icon">🩺</span>
+        <h3>Obez</h3>
+        <p>Bir sağlık profesyoneliyle konuşmak, sana özel sürdürülebilir bir plan oluşturmana yardımcı olur.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>BMI tek başına sağlık durumunu tam yansıtmaz; kas kütlesi, yaş ve vücut yapısı gibi etkenleri hesaba katmaz. Bu araç yalnızca bilgilendirme amaçlıdır, tıbbi tavsiye yerine geçmez.</p>
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -12,31 +12,30 @@
     Aurora arka plan animasyonları, cam efekti (Glassmorphism) ve dinamik göstergeler ile tasarlanmış; BMI hesaplama, ideal kilo analizi ve cinsiyete duyarlı vücut yağ oranı tahmini sunan modern sağlık arayüzü.
   </p>
 
-  <!-- Ekran Çıktıları -->
-  <div align="center">
-    <img src="resim1.png" alt="BMI Hesaplayıcı Genel Görünüm" width="100%" style="max-width: 650px; border-radius: 16px; margin-bottom: 12px;">
-    <br>
-    <img src="resim2.png" alt="BMI Hesaplayıcı Detay Görünümü" width="100%" style="max-width: 650px; border-radius: 16px;">
-  </div>
-
 </div>
+
+---
+
+![BMI Hesaplayıcı Genel Görünüm](resim1.png)
+
+![BMI Hesaplayıcı Detay Görünümü](resim2.png)
 
 ---
 
 ## 🌟 Öne Çıkan Özellikler
 
-- **⏱️ Canlı BMI Göstergesi (Gauge):** SVG tabanlı ibre animasyonu ve WHO standartlarına uygun renkli bölge (Zone) takibi[cite: 2].
-- **📏 Çoklu Birim Desteği:** Boy için `cm / inç`, kilo için `kg / lb` birimleri arasında anlık dönüşüm[cite: 2].
-- **🧬 Tahmini Vücut Yağ Oranı:** *Deurenberg* formülü kullanılarak yaş, BMI ve cinsiyet parametreleriyle dinamik yağ oranı hesaplama[cite: 2].
-- **🎯 İdeal Kilo Aralığı:** Girilen boy değerine göre sağlıklı kilo sınırlarını otomatik görüntüleme[cite: 2].
-- **💡 Dinamik Öneri Kartları:** Hesaplanan BMI kategorisine göre otomatik aktifleşen kişiselleştirilmiş tavsiyeler[cite: 2].
-- **🌌 Aurora Glassmorphism Tasarım:** Akıcı arka plan animasyonu ve karanlık tema (Dark Mode) uyumu[cite: 1, 2].
+- **⏱️ Canlı BMI Göstergesi (Gauge):** SVG tabanlı ibre animasyonu ve WHO standartlarına uygun renkli bölge (Zone) takibi.
+- **📏 Çoklu Birim Desteği:** Boy için `cm / inç`, kilo için `kg / lb` birimleri arasında anlık dönüşüm.
+- **🧬 Tahmini Vücut Yağ Oranı:** *Deurenberg* formülü kullanılarak yaş, BMI ve cinsiyet parametreleriyle dinamik yağ oranı hesaplama.
+- **🎯 İdeal Kilo Aralığı:** Girilen boy değerine göre sağlıklı kilo sınırlarını otomatik görüntüleme.
+- **💡 Dinamik Öneri Kartları:** Hesaplanan BMI kategorisine göre otomatik aktifleşen kişiselleştirilmiş tavsiyeler.
+- **🌌 Aurora Glassmorphism Tasarım:** Akıcı arka plan animasyonu ve karanlık tema (Dark Mode) uyumu.
 
 ---
 
 ## 🛠️ Kurulum ve Çalıştırma
 
-Projeyi yerel makinenizde çalıştırmak için depoyu klonlayıp `index.html` dosyasını tarayıcınızda açmanız yeterlidir[cite: 2]:
+Projeyi yerel makinenizde çalıştırmak için depoyu klonlayıp `index.html` dosyasını tarayıcınızda açmanız yeterlidir:
 
 ```bash
 git clone [https://github.com/westblood585-sketch/bmi-vucut-kitle-indeksi-hesaplayici.git](https://github.com/westblood585-sketch/bmi-vucut-kitle-indeksi-hesaplayici.git)
